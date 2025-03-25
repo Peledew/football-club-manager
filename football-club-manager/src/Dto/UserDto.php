@@ -1,47 +1,30 @@
 <?php
 
-namespace App\Entity;
+namespace App\Dto;
 
+use App\Entity\Performance;
 use App\Enum\UserRole;
-use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface
+class UserDto
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private ?int $id = null;
-    #[ORM\Column(type: 'string', length: 100)]
     private string $username;
-
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
-
-    #[ORM\Column(type: 'string', length: 100)]
     private string $email;
-
-    #[ORM\Column(enumType: UserRole::class)]
     private UserRole $role;
-
-    #[ORM\Column(type: 'string', length: 100)]
-    private string $position; // e.g., 'Striker', 'Goalkeeper'
-
-    #[ORM\OneToMany(targetEntity: Performance::class, mappedBy: 'user')]
+    private string $position;
     private Collection $performances;
-
-    #[ORM\Column(length: 50, nullable: true)]
     private ?string $firstName = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
     private ?string $lastName = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getUsername(): string
@@ -99,11 +82,9 @@ class User implements UserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(?string $firstName): static
+    public function setFirstName(?string $firstName): void
     {
         $this->firstName = $firstName;
-
-        return $this;
     }
 
     public function getLastName(): ?string
@@ -111,39 +92,11 @@ class User implements UserInterface
         return $this->lastName;
     }
 
-    public function setLastName(?string $lastName): static
+    public function setLastName(?string $lastName): void
     {
         $this->lastName = $lastName;
-
-        return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
 
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-    public function getRoles(): array
-    {
-        // TODO: Implement getRoles() method.
-        return [];
-    }
-
-    public function eraseCredentials(): void
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
-
-    public function getUserIdentifier(): string
-    {
-        // TODO: Implement getUserIdentifier() method.
-        return "";
-    }
 
 }
