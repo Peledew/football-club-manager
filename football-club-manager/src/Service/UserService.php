@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Dto\UserDto;
 use App\Entity\User;
+use App\Repository\Contract\IUserRepository;
 use App\Repository\UserRepository;
 use App\Service\Contract\IUserService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,9 +12,9 @@ use Doctrine\Common\Collections\Collection;
 
 class UserService implements IUserService
 {
-    private $userRepository;
+    private IUserRepository $userRepository;
 
-    public function __construct(UserRepository $userRepository){
+    public function __construct(IUserRepository $userRepository){
         $this->userRepository = $userRepository;
     }
 
